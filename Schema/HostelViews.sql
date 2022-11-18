@@ -1,14 +1,12 @@
 
 /* Queries all students and their related attributes */
 create or replace view v_student as
-    select sid, fname, lname, address, birthday, category.name as category,
-        status, gender.name as gender, nationality.name as nationality,
-        degree.name as degree, needs, ad_comment
+    select *
     from student
     left join category on category_id = cid
     left join degree on degree_id = did
     left join nationality on nationality_id = nid
-    left join gender on gender_id = gid
+    left join advisor on advisor_id = aid
 ;
 
 /* Queries all rooms and their related buildings */
