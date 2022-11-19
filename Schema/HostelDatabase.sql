@@ -49,7 +49,7 @@ create table if not exists studentflat (
     fid         smallint primary key auto_increment comment 'Assigned flat number',
     bid         smallint not null unique comment 'Building ID',
     bedrooms    smallint not null comment 'Number of bedrooms the flat contains',
-    check (bedrooms >= 3 and bedrooms <= 5),
+    constraint bedroom_count check (bedrooms >= 3 and bedrooms <= 5),
     foreign key (bid) references building (bid)
     on delete cascade
 );
@@ -112,7 +112,7 @@ create table if not exists lease (
     l_year      year not null comment 'The Starting year the lease is active for',
     semester    enum('Winter','Summer','Fall') not null comment 'The starting semester of this lease',
     duration    smallint not null comment 'The number of semesters this lease lasts for',
-    check (duration >= 1 and duration <= 3),
+    constraint valid_duration check (duration >= 1 and duration <= 3),
     movein      datetime comment 'Day and time student plans to move in if known',
     moveout     datetime comment 'Day and time student plans to move out if known',
     foreign key (student_id) references student (sid),
@@ -123,7 +123,7 @@ create table if not exists invoice (
     iid         int primary key auto_increment comment 'Generic ID',
     lease_id    int not null comment 'Lease ID this invoice belongs to',
     i_index     tinyint not null comment 'Index of this invoice relative to the starting date of the lease. 0=first invoice',
-    check (i_index >= 0 and i_index < (select duration from lease where lid=lease_id)),
+    constraint possible_index check (i_index >= 0 and i_index < 3),
     paydue      decimal(7,2) not null comment 'Payment due for this invoice',
     paid_date   datetime comment 'Null if hasnt been paid yet',
     paytype_id  smallint comment 'Null if hasnt been paid yet',
