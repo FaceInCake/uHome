@@ -1,0 +1,6 @@
+
+# Build artifacts
+/build/*
+
+# Secret RDBMS credientials
+/src/php/.env
