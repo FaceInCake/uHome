@@ -1,5 +1,5 @@
 <?php
-    require_once 'vars/.env';
+    require_once '.env';
 
 
 
@@ -9,7 +9,8 @@
     // -----------------------------------
 
 
-
+    
+    // Helper message
     $ERR500 = "Error 500: Internal server error";
 
     // Returns either the row_id affected or the result set
