@@ -128,5 +128,7 @@ create table if not exists invoice (
     paid_date   datetime comment 'Null if hasnt been paid yet',
     paytype_id  smallint comment 'Null if hasnt been paid yet',
     reminder1   datetime comment 'Null if not given out yet',
-    reminder2   datetime comment 'Null if not given out yet'
+    reminder2   datetime comment 'Null if not given out yet',
+    foreign key (lease_id) references lease (lid),
+    foreign key (paytype_id) references paytype (tid)
 );
