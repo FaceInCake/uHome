@@ -1,4 +1,13 @@
-Options -MultiViews
+# -MultiViews disables content negotiation
+# +FollowSymLinks stops the rerouting of symbolic links like linking jQuery or a css file
+Options -MultiViews +FollowSymLinks
+
+# Vroom Vroom
 RewriteEngine On
+
+# The requested file must not be found
 RewriteCond %{REQUEST_FILENAME} !-f
+
+# Redirect to Default.php
+# (which will re-include the originally requested resource as a php file)
 RewriteRule ^ Default.php [QSA,L]
