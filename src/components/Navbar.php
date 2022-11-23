@@ -21,10 +21,10 @@
                 $SignIco = "user";
                 $SignText = "Dashboard";
                 if (isset($_SESSION["sid"])) {
-                    $SignUrl = "Student.php";
+                    $SignUrl = "Student";
                 }
                 elseif (isset($_SESSION["hid"])) {
-                    $SignUrl = "Staff.php";
+                    $SignUrl = "Staff";
                 }
                 else {
                     $SignIco = "sign-in";
@@ -52,10 +52,12 @@
                         Contact Us
                     </a>
                     <div class="dropdown-divider"></div>
+                    <?php if (isset($_SESSION["sid"]) or isset($_SESSION["hid"])) { ?>
                     <a class="dropdown-item" href="php/Logout.php">
                         <i class="fa fa-sign-out my-auto" aria-hidden="true"></i>
                         Logout
                     </a>
+                    <?php } ?>
                 </div>
             </li>
         </ul>

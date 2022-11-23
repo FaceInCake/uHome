@@ -8,4 +8,6 @@
     // session_regenerate_id(true);
 
     http_response_code(200);
+
+    header("location: /");
 ?>

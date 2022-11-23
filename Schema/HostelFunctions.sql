@@ -53,5 +53,26 @@ begin
     end case;
 end//
 
+CREATE DEFINER=`root`@`localhost` FUNCTION `leaseDurationDates`(`lease_id` INT) RETURNS text CHARSET utf8mb4
+BEGIN
+    DECLARE lease_duration INT;
+    DECLARE lease_semester INT;
+    DECLARE lease_year INT;
+    DECLARE lease_start TEXT;
+    DECLARE lease_end TEXT;
+    SELECT duration, semester, l_year INTO lease_duration, lease_semester, lease_year FROM lease WHERE lid = lease_id;
+
+    IF lease_semester = 1 THEN
+            SET lease_start = DATE(CONCAT(CONVERT(lease_year, CHAR), '-09-01'));
+        ELSEIF lease_semester = 2 THEN
+            SET lease_start = DATE(CONCAT(CONVERT(lease_year + 1, CHAR), '-01-01'));
+        ELSE
+            SET lease_start = DATE(CONCAT(CONVERT(lease_year + 1, CHAR), '-05-01'));
+    END IF;
+    SET lease_end = DATE_ADD(DATE_ADD(lease_start, INTERVAL (4 * lease_duration) MONTH), INTERVAL -1 DAY);
+    
+    RETURN CONCAT(lease_start, ' - ', DATE_FORMAT(lease_end, '%Y-%m-%d'));
+END//
+
 -- End Procedures --
 delimiter ;

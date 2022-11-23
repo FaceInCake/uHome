@@ -1,8 +1,14 @@
 <?php
+    session_start();
     if ($_SERVER["REQUEST_URI"] === "/")
         $RNAME = "Home";
-    else
-        $RNAME = substr($_SERVER["REQUEST_URI"], strpos($_SERVER["REQUEST_URI"], "/")?:0);
+    else {
+        $start = strpos($_SERVER["REQUEST_URI"], "/") ?: 0 + 1;
+        $end = strpos($_SERVER["REQUEST_URI"], "?");
+        if ($end === false) $end = null;
+        else $end = $end - $start;
+        $RNAME = substr($_SERVER["REQUEST_URI"], $start??0, $end??null);
+    }
     $R = "./pages/" . $RNAME . ".php";
 ?>
 <!DOCTYPE html>

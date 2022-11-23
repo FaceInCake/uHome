@@ -1,5 +1,5 @@
 <?php
-    require_once '.env';
+    require_once 'vars/.env';
 
 
 
