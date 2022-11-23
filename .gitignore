@@ -3,7 +3,7 @@
 /build/*
 
 # Secret RDBMS credientials
-/src/php/.env
+/src/php/vars/*
 
 
 Schema/~$4150_P1_Q1.drawio.bkp
