@@ -5,6 +5,9 @@ Options -MultiViews +FollowSymLinks
 # Vroom Vroom
 RewriteEngine On
 
+# Forbid requests for .env
+RewriteRule ^.*\.env$ "/" [F,L]
+
 # The requested file must not be found
 RewriteCond %{REQUEST_FILENAME} !-f
 

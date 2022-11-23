@@ -1,0 +1,24 @@
+
+body {
+    margin: 0;
+    background-color: lightgray;
+}
+
+#content {
+    background-color: whitesmoke;
+    margin: 0.5em;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+div.banner-image{
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    align-items: stretch;
+}
+.banner-image img {
+    width: 100%;
+    object-fit: contain;
+    height: auto;
+}
