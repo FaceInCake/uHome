@@ -1,19 +1,12 @@
 <?php
   if (! isset($_SESSION['hid']))
     header('location: Error403');
-  
-  if (isset($_POST['sid'])) {
-    require_once "php/SetStudent.php";
-    $res = setStudent();
-    $response = $res['message'];
-  }
-
 ?>
 <div class="container ms-1">
   <h1> Add a Student </h1>
-  <em><?=$response??""?></em>
+  <em id="resptext"></em>
   <hr>
-  <form role="form" method="post" action="#">
+  <form id="myform" role="form" method="post" action="#">
 
     <div class="form-group row">
       <!---<label for="name" class="col-sm-2 col-form-label">Name</label>--->
@@ -108,10 +101,25 @@
 
 
 
-    <div class="form-group row">
+    <!-- <div class="form-group row">
       <div class="centerField">
         <input type="submit" value="Add" name="submit" class="btn btn-primary buttonCustom" />
-      </div>
-    </div>
+      </div> -->
+    <!-- </div> -->
+
+    <button id="fsub" class="btn btn-primary">Submit</button>
   </form>
 </div>
+<script>
+  $("#fsub").click(function (e) {
+    e.preventDefault();
+    var x = $("#myform").serializeArray();
+    var data = {};
+    $("#myform input").each(function(i, elem) {
+      data[elem.name] = elem.value;
+    });
+    $.post("php/SetStudent.php", data, function(res) {
+      $("#resptext").html(res);
+    });
+  });
+</script>

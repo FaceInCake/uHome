@@ -9,18 +9,16 @@ $sql = "SELECT
 			sid,
 			fname,
 			lname,
-			CASE residencehall.bid
-				WHEN NOT NULL THEN name
-				ELSE 'Student Flat'
-			END AS building,
+			residencehall.rid,
+            studentflat.fid,
 			room,
 			rent,
 			duration,
 			leaseDurationDates(lid) AS start_end_dates
 		FROM student
-		JOIN lease ON sid = student_id
-		JOIN room ON room_id = pid
-		JOIN building ON room.bid = building.bid
+		left JOIN lease ON sid = student_id
+		left JOIN room ON room_id = pid
+		left JOIN building ON room.bid = building.bid
 		LEFT JOIN residencehall ON building.bid = residencehall.bid
 		LEFT JOIN studentflat ON building.bid = studentflat.bid;";
 
@@ -30,7 +28,6 @@ $sql = "SELECT
 <tr> 
     <td> <font face="Arial">ID</font> </td> 
     <td> <font face="Arial">Name</font> </td> 
-    <td> <font face="Arial">Building</font> </td> 
     <td> <font face="Arial">Room</font> </td> 
     <td> <font face="Arial">Monthly Rent</font> </td>
     <td> <font face="Arial">Duration</font> </td>
@@ -43,7 +40,6 @@ if ($result = query($sql)) {
         echo '<tr> 
                   <td>' . $row["sid"] . '</td> 
                   <td>' . $row["fname"] . ' ' . $row["lname"] . '</td> 
-				  <td>' . $row["building"] . '</td>
                   <td>' . $row["room"] . '</td> 
                   <td>$' . $row["rent"] . '</td>
                   <td>' . $row["duration"] * 4 . ' months</td>

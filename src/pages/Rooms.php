@@ -9,7 +9,7 @@
     }
     if ($res->num_rows > 0) {
 ?>
-<table>
+<table class="table">
     <tbody>
         <tr>
             <th>Place Number</th>

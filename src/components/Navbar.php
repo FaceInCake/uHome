@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-md navbar-light bg-light">
     <!-- The Brand Icon -->
     <a class="navbar-brand" href="/">
         <img src="images/Icon.ico" alt="Brand Icon" width="48" height="48">

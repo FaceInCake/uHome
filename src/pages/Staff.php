@@ -32,3 +32,10 @@
 <a href="AddStudent">
     <button class="btn btn-primary">New Student</button>
 </a>
+<br><br>
+<a href="Inspections">
+    <button class="btn btn-primary">View Inspections</button>
+</a>
+<a href="AddInspection">
+    <button class="btn btn-primary">Add Inspection</button>
+</a>
