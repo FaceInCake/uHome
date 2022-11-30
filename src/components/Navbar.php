@@ -10,10 +10,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <!-- Home button -->
-            <li class="nav-item active">
+            <li class="nav-item d-flex <?=$RNAME=='Home'?'active':''?> ">
                 <a class="nav-link" href="/">
                     <i class="fa fa-home my-auto" aria-hidden="true"></i>
-                    Home <span class="sr-only">(current)</span>
+                    Home <?=$RNAME=='Home'?"<span class='sr-only'>(current)</span>":"" ?> 
                 </a>
             </li>
             <!-- Dashboard button OR Sign in -->
@@ -34,10 +34,10 @@
                     // require_once "components/SignIn.php";
                 }
             ?>
-            <li class="nav-item d-flex">
+            <li class="nav-item d-flex <?=in_array($RNAME, ['Student','Staff','SignIn'])?'active':''?> ">
                 <a class="nav-link" href="<?=$SignUrl?>">
                     <i class="fa fa-<?=$SignIco?> my-auto" aria-hidden="true"></i>
-                    <?=$SignText?>
+                    <?=$SignText?> <?=in_array($RNAME, ['Student','Staff','SignIn'])?"<span class='sr-only'>(current)</span>":"" ?>
                 </a>
             </li>
             <!-- Other dropdown -->

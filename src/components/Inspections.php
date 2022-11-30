@@ -1,11 +1,14 @@
 <?php
-    require_once "php/SQL.php";
+    session_start();
+    require_once "../php/SQL.php";
+    require_once "../php/Post.php";
+
     if (isset($_SESSION["hid"]))
         $res = query("SELECT * FROM v_flatinspection");
     else {
-        header("location: Error403");
+        require_once "../pages/Error403.php";
+        exit(403);
     }
-    if ($res->num_rows > 0) {
 ?>
 <table class="table">
     <tbody>
@@ -19,14 +22,9 @@
             <tr>
                 <td><?=$row['fid']?></td>
                 <td><?=$row['staff_fname']." ".$row["staff_lname"]?></td>
-                <td><?=$row['satisfactory']?></td>
+                <td><?=$row['satisfactory']===1?'Yes':'No'?></td>
                 <td><?=$row['flat_bedrooms']?></td>
             </tr>
 <?php   } ?>
     </tbody>
 </table>
-<?php
-    } else {
-        echo "0 results";
-    }
-?>

@@ -1,11 +1,15 @@
 <?php
-    require_once "php/SQL.php";
+    session_start();
+    require_once "../php/SQL.php";
+    require_once "../php/Post.php";
+
     if (isset($_SESSION["sid"]))
         $res = query("select r.* from v_room r join (select room_id from lease where student_id = ?) as l on r.pid = l.room_id", $_SESSION["sid"]);
     elseif (isset($_SESSION["hid"]))
         $res = query("SELECT * FROM v_room");
     else {
-        header("location: Error403");
+        require_once "../pages/Error403.php";
+        exit(403);
     }
     if ($res->num_rows > 0) {
 ?>
