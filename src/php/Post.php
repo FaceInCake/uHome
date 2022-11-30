@@ -6,6 +6,14 @@
         'success' => false,
     );
 
+    function createError400 ($field) {
+        return array(
+            'status' => 400,
+            'success' => false,
+            'message' => 'Invalid ' . $field
+        );    
+    }
+
     // Function for stricly sanitizing a POST[key] from a regex pattern
     // $pattern is a regex pattern, post-formatted for you as "/\A$pattern\Z/"
     // $key is for indexing $_POST
