@@ -21,37 +21,47 @@
         global $DEBUG; global $ERR_MSG; global $ERR500;
         if ($DEBUG) mysqli_report(MYSQLI_REPORT_ERROR|MYSQLI_REPORT_STRICT);
         global $DB_HOST; global $DB_USER; global $DB_PASS; global $DB_NAME;
-        $con = new MySQLi($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
-        if ($con->connect_errno) {
-            if ($DEBUG) {
-                $ERR_MSG = "Connection failed: " . $con->connect_error;
-            } else {
+        try {
+            $con = new MySQLi($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+            if ($con->connect_errno) {
+                if ($DEBUG) {
+                    $ERR_MSG = "Connection failed: " . $con->connect_error;
+                } else {
+                    $ERR_MSG = $ERR500;
+                }
+                $con->close();
+                return false;
+            }
+            $stmt = $con->prepare($q);
+            if ($stmt === false) {
+                if ($DEBUG) {
+                    $ERR_MSG = $con->error;
+                } else {
+                    $ERR_MSG = $ERR500;
+                }
+                $con->close();
+                return false;
+            }
+            if (! $stmt->execute($args)) {
                 $ERR_MSG = $ERR500;
-            }
+                $stmt->close();
+                $con->close();
+                return false;
+            };
+            $id = $con->insert_id;
+            $res = $stmt->get_result();
+            $stmt->close();
             $con->close();
-            return false;
-        }
-        $stmt = $con->prepare($q);
-        if ($stmt === false) {
-            if ($DEBUG) {
-                $ERR_MSG = $con->error;
-            } else {
-                $ERR_MSG = $ERR500;
+            if ($res === false) {
+                if ($id === 0) {
+                    return true;
+                } else {
+                    return $id;
+                }
             }
-            $con->close();
+        } catch (exception $e) {
+            $ERR_MSG = $e->getMessage();
             return false;
-        }
-        if (! $stmt->execute($args)) return $ERR500;
-        $id = $con->insert_id;
-        $res = $stmt->get_result();
-        $stmt->close();
-        $con->close();
-        if ($res === false) {
-            if ($id === 0) {
-                return true;
-            } else {
-                return $id;
-            }
         }
         return $res;
     }
