@@ -1,0 +1,9 @@
+
+# Build artifacts
+/build/*
+
+
+Schema/~$4150_P1_Q1.drawio.bkp
+
+# Secret RDBMS credientials
+src/php/vars/
